@@ -18,10 +18,16 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="top">
+        android:gravity="center">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="130dp"
+            android:gravity="top">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -29,6 +35,21 @@
             android:src="@drawable/logo"
             android:background="@null"
             android:id="@+id/logo"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/connect"
+
+                android:background="@null"
+                android:id="@+id/connect"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
