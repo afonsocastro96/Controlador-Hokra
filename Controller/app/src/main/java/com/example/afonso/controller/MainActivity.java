@@ -128,13 +128,13 @@ public class MainActivity extends Activity {
                         analogXAxis = (short) ((event.getX() * 255) / endX);
                         analogYAxis = (short) ((event.getY() * 255) / endY);
 
-                        if (event.getX() > 255) {
+                        if (analogXAxis > 255) {
                             analogXAxis = 255;
                         } else if (event.getX() < 0) {
                             analogXAxis = 0;
                         }
 
-                        if (event.getY() > 255) {
+                        if (analogYAxis > 255) {
                             analogYAxis = 255;
                         } else if (event.getY() < 0) {
                             analogYAxis = 0;
