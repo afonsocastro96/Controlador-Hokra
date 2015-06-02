@@ -5,20 +5,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class MainActivity extends Activity {
+    private final Activity activity = this;
     private float endX = 0;
     private float endY = 0;
 
@@ -69,11 +72,12 @@ public class MainActivity extends Activity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                // set prompts.xml to alertdialog builder
+                // set popup.xml to alertdialog builder
                 alertDialogBuilder.setView(promptsView);
 
                 final EditText userInput = (EditText) promptsView
                         .findViewById(R.id.edittext);
+                userInput.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                 // set dialog message
                 alertDialogBuilder.setTitle("Connect to server")
@@ -165,19 +169,26 @@ public class MainActivity extends Activity {
     protected void connect(){
         try {
             socket = new Socket();
-            socket.connect(new InetSocketAddress(hostName, port));
-            if(!socket.isConnected()) {
-                System.out.println("Nao me conectei...");
-                return;
+            try {
+                socket.connect(new InetSocketAddress(hostName, port));
+            } catch(ConnectException ce) {
+                createToast("I'm not connected... :(");
             }
-            else {
-                System.out.println("I am connected!");
-            }
+            if(socket.isConnected())
+                createToast("I'm connected! :)");
             data = new DataOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
         connected = true;
+    }
+
+    protected void createToast(final String toast){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(activity, toast, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     protected void sendInfo(){
